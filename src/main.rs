@@ -3,7 +3,7 @@
 mod address;
 mod address_book;
 mod automaton;
-mod automaton_viewer;
+mod auton_a1;
 mod buildable;
 mod cell;
 mod color;
@@ -13,14 +13,16 @@ mod rule_key;
 mod tape;
 mod torus;
 mod track;
-mod tracker_viewer;
 mod util;
-
-use crate::tracker_viewer::*;
-use std::path::Path;
+mod walker;
+use crate::auton_a1::*;
 
 fn main() {
-    let mut viewer = TrackerViewer::new((512 + 256), 12);
-    let path = Path::new("a0");
-    viewer.render(&path);
+	let child = std::thread::Builder::new()
+		.stack_size(1024 * 1024 * 1024)
+		.spawn(move || {
+			AutonA1::render();
+		})
+		.unwrap();
+	let res = child.join();
 }

@@ -7,7 +7,7 @@ let imageIndex = 0;
 if (process.argv.length > 3) {
   imageIndex = process.argv[3];
 }
-const imgDir = "./render/" + version;
+const imgDir = './render/' + version;
 
 const resizedDir = `./render/${version}-resized`;
 
@@ -28,7 +28,7 @@ child_process.spawnSync(
     '-vf',
     `scale=${imageWidth}:-1`,
     '-sws_flags',
-    'gauss',
+    'neighbor',
     `${resizedDir}/picture_${imageIndex}.png`,
     '-y',
   ],

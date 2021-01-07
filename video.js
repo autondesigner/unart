@@ -11,18 +11,18 @@ function generateVideo(path, width) {
     'ffmpeg',
     [
       '-framerate',
-      '16',
+      '60',
       '-i',
-      `${imgDir}/picture_%d.png`,
+      `render/${imgDir}/picture_%d.png`,
       '-vf',
       `scale=${videoWidth}:-1`,
       '-sws_flags',
-      'bilinear',
+      'neighbor',
       '-b:v',
       '32M',
       '-vcodec',
       'h264',
-      `videos/${videoName}.mov`,
+      `render/videos/${videoName}.mov`,
       '-y',
     ],
     {
@@ -30,8 +30,8 @@ function generateVideo(path, width) {
     }
   );
 }
-if (!fs.existsSync('videos')) {
-  fs.mkdirSync('videos');
+if (!fs.existsSync('render/videos')) {
+  fs.mkdirSync('render/videos');
 }
 
 let version = 'a0';

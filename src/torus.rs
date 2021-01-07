@@ -51,6 +51,47 @@ impl<T: Buildable> Torus<T> {
         let index = self.index(address.row, address.column);
         self.books[index].neighbors[direction as usize]
     }
+    pub fn find_neighbor_no_torus(
+        &self,
+        address: Address,
+        direction: Direction,
+    ) -> Option<Address> {
+        match direction {
+            Direction::Down => {
+                if address.row == self.height - 1 {
+                    return None;
+                }
+                Some(Address::new(address.row + 1, address.column))
+            }
+            Direction::Up => {
+                if address.row == 0 {
+                    return None;
+                }
+                Some(Address::new(address.row - 1, address.column))
+            }
+            Direction::Right => {
+                if address.column == self.width - 1 {
+                    return None;
+                }
+                Some(Address::new(address.row, address.column + 1))
+            }
+            Direction::Left => {
+                if address.column == 0 {
+                    return None;
+                }
+                Some(Address::new(address.row, address.column - 1))
+            }
+        }
+    }
+    pub fn find_rule_neighborhood(&self, address: Address) -> Vec<Address> {
+        let mut neighborhood = Vec::with_capacity(5);
+        neighborhood.push(address);
+        neighborhood.push(self.find_neighbor(address, Direction::Down));
+        neighborhood.push(self.find_neighbor(address, Direction::Up));
+        neighborhood.push(self.find_neighbor(address, Direction::Right));
+        neighborhood.push(self.find_neighbor(address, Direction::Left));
+        neighborhood
+    }
     pub fn find_neighborhood(&self, address: Address, height: usize, width: usize) -> Vec<Address> {
         let mut wildcard = address;
         for _i in 0..width {
