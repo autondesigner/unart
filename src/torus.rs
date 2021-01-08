@@ -92,6 +92,33 @@ impl<T: Buildable> Torus<T> {
         neighborhood.push(self.find_neighbor(address, Direction::Left));
         neighborhood
     }
+    pub fn find_rectangle_neighborhood(
+        &self,
+        address: Address,
+        height: usize,
+        width: usize,
+    ) -> Vec<Address> {
+        let mut wildcard = address;
+        let neighborhood_cap = height * width;
+        let mut neighborhood = Vec::with_capacity(neighborhood_cap);
+        let mut direction = Direction::Right;
+        for row in 0..height {
+            for column in 0..width {
+                neighborhood.push(wildcard);
+                if column == width - 1 {
+                    wildcard = self.find_neighbor(wildcard, Direction::Down);
+                } else {
+                    wildcard = self.find_neighbor(wildcard, direction);
+                }
+            }
+            if direction == Direction::Right {
+                direction = Direction::Left;
+            } else {
+                direction = Direction::Right;
+            }
+        }
+        neighborhood
+    }
     pub fn find_neighborhood(&self, address: Address, height: usize, width: usize) -> Vec<Address> {
         let mut wildcard = address;
         for _i in 0..width {

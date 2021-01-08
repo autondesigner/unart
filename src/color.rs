@@ -54,20 +54,14 @@ pub fn build_colors(
     let value_change: f32 = 1.0 / values_count as f32;
     let mut hue = 180.0;
     for hue_index in 0..hues_count {
-        let mut saturation = 0.0;
+        let mut saturation = 1.0;
         for saturation_index in 0..saturations_count {
-            if saturation > 1.0 {
-                panic!("value > 1.0");
-            }
-            let mut value = 1.0;
+            let mut value = 0.0;
             for value_index in 0..values_count {
-                if value < 0.0 {
-                    panic!("value < 0.0");
-                }
                 colors.push(Color::new(hue, saturation, value));
-                value -= value_change;
+                value += value_change;
             }
-            saturation += saturation_change;
+            saturation -= saturation_change;
         }
         hue += hue_change;
         hue %= 360.0;

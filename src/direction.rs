@@ -5,11 +5,11 @@ pub enum Direction {
     Right,
     Left,
 }
-pub const DOWN: usize = 0;
-pub const RIGHT: usize = 1;
-pub const UP: usize = 2;
-pub const LEFT: usize = 3;
 
+pub const RIGHT: usize = 0;
+pub const DOWN: usize = 1;
+pub const LEFT: usize = 2;
+pub const UP: usize = 3;
 pub const DIRECTIONS: usize = 4;
 
 impl Direction {

@@ -4,14 +4,14 @@ use crate::track::*;
 pub struct WalkerElement {
 	pub direction: Direction,
 	pub level: usize,
-	pub radius: usize,
+	pub length: usize,
 }
 impl WalkerElement {
-	fn new(direction: Direction, level: usize, radius: usize) -> WalkerElement {
+	fn new(direction: Direction, level: usize, length: usize) -> WalkerElement {
 		WalkerElement {
 			direction,
 			level,
-			radius,
+			length,
 		}
 	}
 }
@@ -22,15 +22,15 @@ pub struct Walker {
 }
 
 impl Walker {
-	pub fn new(direction: Direction, level: usize, radius: usize) -> Walker {
+	pub fn new(direction: Direction, level: usize, length: usize) -> Walker {
 		let mut elements = Vec::new();
-		elements.push(WalkerElement::new(direction, level, radius));
+		elements.push(WalkerElement::new(direction, level, length));
 		let index = 0;
 		Walker { elements, index }
 	}
-	pub fn add_element(&mut self, direction: Direction, level: usize, radius: usize) {
+	pub fn add_element(&mut self, direction: Direction, level: usize, length: usize) {
 		self.elements
-			.push(WalkerElement::new(direction, level, radius));
+			.push(WalkerElement::new(direction, level, length));
 	}
 	pub fn remove_first_element(&mut self) {
 		if self.elements.len() > 1 {
@@ -40,8 +40,8 @@ impl Walker {
 			}
 		}
 	}
-	pub fn radius(&self) -> usize {
-		self.elements[self.index].radius
+	pub fn length(&self) -> usize {
+		self.elements[self.index].length
 	}
 	pub fn level(&self) -> usize {
 		self.elements[self.index].level
